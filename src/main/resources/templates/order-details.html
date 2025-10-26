@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Details</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div th:replace="~{fragments/header :: main-header}"></div>
+
+<div class="container">
+  <div class="detail-section">
+    <h2>Order Summary (ID: <span th:text="${order.id}">1</span>)</h2>
+    <p><strong>Customer:</strong> <span th:text="${order.customerName}">Customer</span></p>
+    <p><strong>Date:</strong> <span th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}">Date</span></p>
+    <p><strong>Status:</strong> <span th:text="${order.status}">Status</span></p>
+    <p><strong>Total:</strong> $<span th:text="${#numbers.formatDecimal(order.totalAmount, 1, 2)}">Amount</span></p>
+  </div>
+
+  <div class="detail-section">
+    <h2>Payment Information</h2>
+    <div th:if="${order.payment != null}">
+      <p><strong>Status:</strong> <span th:text="${order.payment.status}">Paid</span></p>
+      <p><strong>Method:</strong> <span th:text="${order.payment.paymentMethod}">Method</span></p>
+    </div>
+    <div th:unless="${order.payment != null}">
+      <p>No payment has been recorded for this order.</p>
+      <form class="form-container" style="padding:0; border:none; box-shadow:none; max-width:100%;" th:action="@{/admin/payments/add}" th:object="${newPayment}" method="post">
+        <input type="hidden" name="orderId" th:value="${order.id}" />
+        <div class="form-group">
+          <label for="amount">Amount:</label>
+          <input type="text" id="amount" th:field="*{amount}" required />
+        </div>
+        <div class="form-group">
+          <label for="paymentMethod">Payment Method:</label>
+          <select id="paymentMethod" th:field="*{paymentMethod}">
+            <option value="Credit Card">Credit Card</option>
+            <option value="PayPal">PayPal</option>
+          </select>
+        </div>
+        <button type="submit" class="button button-success">Record Payment</button>
+      </form>
+    </div>
+  </div>
+  <a href="/admin/orders" class="button button-secondary">Back to Order List</a>
+</div>
+
+<div th:replace="~{fragments/footer :: main-footer}"></div>
+</body>
+</html>

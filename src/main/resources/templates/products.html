@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Products</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div th:replace="~{fragments/header :: main-header}"></div>
+
+<div class="container">
+    <div class="header" style="background:none; box-shadow:none; padding: 2rem 0;">
+        <h1>Our Products</h1>
+        <a th:href="@{/cart}" class="button button-primary">
+            View Cart (<span th:text="${cartItemCount}">0</span>)
+        </a>
+    </div>
+    <div class="card-grid">
+        <div class="card" th:each="p : ${products}">
+            <h3 th:text="${p.name}">Product Name</h3>
+            <p th:text="${p.description}">Description</p>
+            <p><strong>Price: $</strong><span th:text="${#numbers.formatDecimal(p.price, 1, 2)}">99.99</span></p>
+            <form th:action="@{/cart/add}" method="post" style="margin-top: 15px;">
+                <input type="hidden" name="productId" th:value="${p.id}" />
+                <button type="submit" class="button button-success">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: main-footer}"></div>
+</body>
+</html>

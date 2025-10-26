@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Order</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div th:replace="~{fragments/header :: main-header}"></div>
+
+<div class="container">
+  <div class="form-container">
+    <h2>Editing Order ID: <span th:text="${order.id}">1</span></h2>
+    <form th:action="@{/admin/orders/update/{id}(id=${order.id})}" th:object="${order}" method="post">
+      <div class="form-group">
+        <label>Customer Name:</label>
+        <input type="text" th:field="*{customerName}" readonly style="background-color:#e9ecef;" />
+      </div>
+      <div class="form-group">
+        <label for="status">Order Status:</label>
+        <select id="status" th:field="*{status}">
+          <option value="Processing">Processing</option>
+          <option value="Shipped">Shipped</option>
+          <option value="Delivered">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      <button type="submit" class="button button-success">Save Changes</button>
+    </form>
+  </div>
+</div>
+
+<div th:replace="~{fragments/footer :: main-footer}"></div>
+</body>
+</html>

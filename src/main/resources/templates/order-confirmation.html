@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Confirmed</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div th:replace="~{fragments/header :: main-header}"></div>
+
+<div class="container" style="text-align: center;">
+  <div class="card" style="max-width: 600px; margin: auto;">
+    <h2>Thank You for Your Order!</h2>
+    <p>Your order has been placed successfully.</p>
+    <p>Your Order ID is: <strong th:text="${orderId}">0000</strong></p>
+    <a href="/products" class="button button-primary" style="margin-top: 20px;">Continue Shopping</a>
+  </div>
+</div>
+
+<div th:replace="~{fragments/footer :: main-footer}"></div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div th:replace="~{fragments/header :: main-header}"></div>
+
+<div class="container">
+    <div class="form-container">
+        <h2>Checkout Information</h2>
+        <form th:action="@{/place-order}" th:object="${order}" method="post">
+            <div class="form-group">
+                <label for="customerName">Full Name:</label>
+                <input type="text" id="customerName" th:field="*{customerName}" required />
+            </div>
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method:</label>
+                <select id="paymentMethod" name="paymentMethod">
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="PayPal">PayPal</option>
+                </select>
+            </div>
+            <button type="submit" class="button button-success">Place Order</button>
+        </form>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: main-footer}"></div>
+</body>
+</html>

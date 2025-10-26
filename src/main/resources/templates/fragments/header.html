@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<header class="main-header" th:fragment="main-header">
+
+    <a th:href="@{/products}" class="logo">Southern Goods</a>
+
+    <nav class="nav-links">
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/orders}">Admin Dashboard</a>
+
+        <a th:href="@{/products}">Products</a>
+    </nav>
+
+    <div sec:authorize="isAnonymous()">
+        <a th:href="@{/login}" class="auth-button">Login</a>
+    </div>
+
+    <div sec:authorize="isAuthenticated()" class="profile-dropdown">
+
+            <span class="profile-name">
+                Welcome, <span sec:authentication="principal.firstName">User</span>
+            </span>
+
+        <div class="profile-dropdown-content">
+            <a th:href="@{/profile}">View Profile</a>
+
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
+    </div>
+
+</header>
+
+</body>
+</html>
